@@ -6,6 +6,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
+	"text/template"
 	"time"
 )
 
@@ -13,6 +14,7 @@ var router = httprouter.New()
 
 // set routes
 func init() {
+	router.GET("/", index)
 	router.GET("/sites", getSites)
 	router.GET("/status/:name", getStatus)
 }
@@ -40,6 +42,13 @@ func getSite(name string) Site {
 		}
 	}
 	return s
+}
+
+func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	data := Site{}
+	t, err := template.ParseFiles("./static/index.html")
+	check(err)
+	t.Execute(w, data)
 }
 
 func getSites(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -75,6 +84,7 @@ func status(site Site) Status {
 		},
 		Status:       res.StatusCode,
 		ResponseTime: timeDurationInSeconds(t),
+		Updated:      t,
 	}
 	return s
 }
@@ -90,7 +100,8 @@ type Site struct {
 }
 
 type Status struct {
-	Site         Site    `json: site`
-	Status       int     `json: status`
-	ResponseTime float64 `json: responsetime`
+	Site         Site      `json: site`
+	Status       int       `json: status`
+	ResponseTime float64   `json: responsetime`
+	Updated      time.Time `json: updated`
 }
