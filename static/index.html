@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>Sitehealth</title>
+        <title>Health status</title>
 
         <style>
             .site {
@@ -13,21 +13,23 @@
     <body>
         <h1>Hello world</h1>
 
-        <script>
+        <div id="container"></div>
+        <script src="/assets/js/app.min.js"></script>
+        <!--<script>
             var oReq = new XMLHttpRequest();
             oReq.open('GET', 'http://localhost:8080/sites');
             oReq.responseType = 'json';
             oReq.send();
             oReq.onload = function() {
                 var json = oReq.response;
-                createSites(json);                
+                createSites(json);
             }
 
             function createSites(json) {
                 json.forEach(function(site) {
-                    
+
                 });
             }
-        </script>
+        </script>-->
     </body>
 </html>

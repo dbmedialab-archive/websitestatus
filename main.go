@@ -3,17 +3,19 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/julienschmidt/httprouter"
 	"io/ioutil"
 	"net/http"
 	"text/template"
 	"time"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 var router = httprouter.New()
 
 // set routes
 func init() {
+	router.NotFound = http.FileServer(http.Dir("static"))
 	router.GET("/", index)
 	router.GET("/sites", getSites)
 	router.GET("/status/:name", getStatus)
