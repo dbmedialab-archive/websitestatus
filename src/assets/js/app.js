@@ -3,21 +3,40 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
-var ExampleApplication = React.createClass({
-  render: function() {
-    var elapsed = Math.round(this.props.elapsed  / 100);
-    var seconds = elapsed / 10 + (elapsed % 10 ? '' : '.0' );
-    var message =
-      'React has been successfully running for ' + seconds + ' seconds.';
+/*var oReq = new XMLHttpRequest();
+oReq.open('GET', 'http://localhost:8080/sites');
+oReq.responseType = 'json';
+oReq.send();
+oReq.onload = function() {*/
+var client = new EventSource('http://localhost:8080')
+client.onmessage = function (data) {
+  console.log(data);
+  /*ReactDOM.render(
+    <SiteList sites={data} />,
+    document.getElementById('main')
+  );*/
+} 
+  
 
-    return <p>{message}</p>;
+
+var SiteItem = React.createClass({
+  render: function() {
+    return <li className="site">
+      <p>{this.props.sitename}</p>
+      <p>{this.props.status}</p>
+      <p>{this.props.responsetime}</p>
+    </li>
   }
 });
-var start = new Date().getTime();
 
-setInterval(function() {
-  ReactDOM.render(
-    <ExampleApplication elapsed={new Date().getTime() - start} />,
-    document.getElementById('container')
-  );
-}, 50);
+var SiteList = React.createClass({
+  render: function() {        
+    return (
+      <ul className="siteList">
+        {this.props.sites.map(function(site) {
+          return <SiteItem key={site.Id} sitename={site.Name} siteurl={site.Url} />;
+        })}
+      </ul>
+    );
+  }
+});

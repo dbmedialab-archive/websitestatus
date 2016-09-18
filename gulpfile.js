@@ -17,7 +17,7 @@ gulp.task('js', function() {
             title: 'JS Error',
             message: "<%= error.message %>"
         }))
-        .pipe(source('app.min.js'))
+        .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())

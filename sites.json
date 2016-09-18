@@ -1,10 +1,37 @@
 [
     {
+        "id": 1,
         "name": "egreb.net",
         "url": "http://egreb.net"
     },
     {
+        "id": 2,
         "name": "dagbladet.no",
         "url": "http://dagbladet.no"
-    }   
+    },
+    {
+        "id": 3,
+        "name": "vakbikkja.medialaben.no",
+        "url": "http://vaktbikkja.medialaben.no"
+    },
+    {
+        "id": 4,
+        "name": "pressfire.no",
+        "url": "http://pressfire.no"
+    },
+    {
+        "id": 5,
+        "name": "vg.no",
+        "url": "http://vg.no"
+    },
+    {
+        "id": 6,
+        "name": "aftenposten.no",
+        "url": "http://aftenposten.no"
+    },
+    {
+        "id": 7,
+        "name": "nrk.no",
+        "url": "http://nrk.no"
+    }
 ]
