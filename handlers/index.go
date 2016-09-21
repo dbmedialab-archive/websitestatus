@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/egreb/sitesstatus/site"
+	"github.com/egreb/websitestatus/site"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {

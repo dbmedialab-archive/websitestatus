@@ -4,10 +4,10 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/egreb/sitesstatus/broker"
-	"github.com/egreb/sitesstatus/site"
-	"github.com/egreb/sitesstatus/utils"
-	"github.com/egreb/sitesstatus/worker"
+	"github.com/egreb/websitestatus/broker"
+	"github.com/egreb/websitestatus/site"
+	"github.com/egreb/websitestatus/utils"
+	"github.com/egreb/websitestatus/worker"
 	"github.com/julienschmidt/httprouter"
 )
 

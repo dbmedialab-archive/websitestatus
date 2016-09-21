@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/egreb/sitesstatus/utils"
+	"github.com/egreb/websitestatus/utils"
 	"github.com/julienschmidt/httprouter"
 )
 

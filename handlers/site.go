@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/egreb/sitesstatus/site"
+	"github.com/egreb/websitestatus/site"
 )
 
 func SiteHandler(w http.ResponseWriter, r *http.Request) {

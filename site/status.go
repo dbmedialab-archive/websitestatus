@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/egreb/sitesstatus/utils"
+	"github.com/egreb/websitestatus/utils"
 	"github.com/julienschmidt/httprouter"
 )
 
