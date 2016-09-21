@@ -8,16 +8,13 @@ oReq.open('GET', 'http://localhost:8080/sites');
 oReq.responseType = 'json';
 oReq.send();
 oReq.onload = function() {*/
-var client = new EventSource('http://localhost:8080')
-client.onmessage = function (data) {
-  console.log(data);
-  /*ReactDOM.render(
-    <SiteList sites={data} />,
+var client = new EventSource('http://localhost:8080/events');
+client.onmessage = function(msg) {
+  ReactDOM.render(
+    <SiteList sites={msg.data} />,
     document.getElementById('main')
-  );*/
-} 
-  
-
+  );
+};
 
 var SiteItem = React.createClass({
   render: function() {
@@ -30,7 +27,7 @@ var SiteItem = React.createClass({
 });
 
 var SiteList = React.createClass({
-  render: function() {        
+  render: function() {
     return (
       <ul className="siteList">
         {this.props.sites.map(function(site) {
