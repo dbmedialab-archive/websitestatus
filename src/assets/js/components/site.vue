@@ -1,9 +1,23 @@
 <template>
     <h1 class="title">{{ site.Site.Name }}</h1>
-    <p>Status: <span class="label {{ getStatusClass() }}">{{ site.Status }}</span> </p>
-    <p>Responsetime: <span class="label {{ getResponseTimeClass() }}">{{ getResponseTime() }}ms</span> </p>
-    <p>Size: <span>{{ site.Size }}KB</span> </p>
-    <p>Updated: <span>{{ site.Updated }}</span> </p>
+    <table>
+        <tr>
+            <td>Status:</td>
+            <td><span class="label {{ getStatusClass() }}">{{ site.Status }}</span></td>
+        </tr>
+        <tr>
+            <td>Responsetime:</td>
+            <td><span class="label {{ getResponseTimeClass() }}">{{ getResponseTime() }}ms</span></td>
+        </tr>
+        <tr>
+            <td>Size:</td>
+            <td><span>{{ site.Size }}KB</span></td>
+        </tr>
+        <tr>
+            <td>Updated:</td>
+            <td><span>{{ site.Updated }}</span></td>
+        </tr>
+    </table>
 </template>
 
 <script>
