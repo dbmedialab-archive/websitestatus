@@ -24,12 +24,9 @@ type Status struct {
 	w.Write(j)
 }*/
 
-func status(site Site) (Status, error) {
+func status(site Site) Status {
 	t := time.Now()
 	res, err := http.Get(site.Url)
-	if err != nil {
-		return Status{}, err
-	}
 
 	s := Status{
 		Site: Site{
@@ -37,12 +34,19 @@ func status(site Site) (Status, error) {
 			Name: site.Name,
 			Url:  site.Url,
 		},
-		Status:       res.StatusCode,
-		ResponseTime: utils.TimeDurationInSeconds(t),
-		Updated:      DateToString(t),
-		Error:        "none",
+
+		Updated: DateToString(t),
+		Error:   "",
 	}
-	return s, nil
+	if err != nil {
+		s.Status = 0
+		s.ResponseTime = 0
+		s.Error = "Could not connect to website"
+	} else {
+		s.Status = res.StatusCode
+		s.ResponseTime = utils.TimeDurationInSeconds(t)
+	}
+	return s
 }
 
 func GetStatuses() []Status {
@@ -50,7 +54,6 @@ func GetStatuses() []Status {
 	statuses := make([]Status, len(sites))
 	for i := 0; i < len(sites); i++ {
 		st := status(sites[i])
-
 		statuses[i] = st
 	}
 	return statuses
