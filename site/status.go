@@ -1,6 +1,7 @@
 package site
 
 import (
+	"io/ioutil"
 	"net/http"
 	"time"
 
@@ -10,6 +11,7 @@ import (
 type Status struct {
 	Site         Site    `json: site`
 	Status       int     `json: status`
+	Size         float64 `json: size`
 	ResponseTime float64 `json: responsetime`
 	Updated      string  `json: updated`
 	Error        string  `json: error`
@@ -28,22 +30,26 @@ func status(site Site) Status {
 	t := time.Now()
 	res, err := http.Get(site.Url)
 
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
+
 	s := Status{
 		Site: Site{
 			Id:   site.Id,
 			Name: site.Name,
 			Url:  site.Url,
 		},
-
-		Updated: DateToString(t),
-		Error:   "",
+		Status:       0,
+		Size:         0,
+		ResponseTime: 0,
+		Updated:      DateToString(t),
+		Error:        "",
 	}
 	if err != nil {
-		s.Status = 0
-		s.ResponseTime = 0
 		s.Error = "Could not connect to website"
 	} else {
 		s.Status = res.StatusCode
+		s.Size = float64(len(body) / 1000)
 		s.ResponseTime = utils.TimeDurationInSeconds(t)
 	}
 	return s
