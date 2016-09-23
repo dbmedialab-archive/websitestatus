@@ -2,12 +2,12 @@
     {
         "id": 1,
         "name": "egreb.net",
-        "url": "http://egreb.net"
+        "url": "http://www.egreb.net"
     },
     {
         "id": 2,
         "name": "dagbladet.no",
-        "url": "http://dagbladet.no"
+        "url": "http://www.dagbladet.no"
     },
     {
         "id": 3,
@@ -17,21 +17,21 @@
     {
         "id": 4,
         "name": "pressfire.no",
-        "url": "http://pressfire.no"
+        "url": "http://www.pressfire.no"
     },
     {
         "id": 5,
         "name": "vg.no",
-        "url": "http://vg.no"
+        "url": "http://www.vg.no"
     },
     {
         "id": 6,
         "name": "aftenposten.no",
-        "url": "http://aftenposten.no"
+        "url": "http://www.aftenposten.no"
     },
     {
         "id": 7,
         "name": "nrk.no",
-        "url": "http://nrk.no"
+        "url": "http://www.nrk.no"
     }
 ]

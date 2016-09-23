@@ -1,34 +1,36 @@
 package site
 
 import (
-	"encoding/json"
 	"net/http"
 	"time"
 
 	"github.com/egreb/websitestatus/utils"
-	"github.com/julienschmidt/httprouter"
 )
 
 type Status struct {
-	Site         Site      `json: site`
-	Status       int       `json: status`
-	ResponseTime float64   `json: responsetime`
-	Updated      time.Time `json: updated`
+	Site         Site    `json: site`
+	Status       int     `json: status`
+	ResponseTime float64 `json: responsetime`
+	Updated      string  `json: updated`
+	Error        string  `json: error`
 }
 
-func getStatus(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+/*func getStatus(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	site := GetSite(ps.ByName("name"))
 
 	status := status(site)
 	j, err := json.Marshal(status)
 	utils.Check(err)
 	w.Write(j)
-}
+}*/
 
-func status(site Site) Status {
+func status(site Site) (Status, error) {
 	t := time.Now()
 	res, err := http.Get(site.Url)
-	utils.Check(err)
+	if err != nil {
+		return Status{}, err
+	}
+
 	s := Status{
 		Site: Site{
 			Id:   site.Id,
@@ -37,9 +39,10 @@ func status(site Site) Status {
 		},
 		Status:       res.StatusCode,
 		ResponseTime: utils.TimeDurationInSeconds(t),
-		Updated:      t,
+		Updated:      DateToString(t),
+		Error:        "none",
 	}
-	return s
+	return s, nil
 }
 
 func GetStatuses() []Status {
@@ -47,6 +50,7 @@ func GetStatuses() []Status {
 	statuses := make([]Status, len(sites))
 	for i := 0; i < len(sites); i++ {
 		st := status(sites[i])
+
 		statuses[i] = st
 	}
 	return statuses
