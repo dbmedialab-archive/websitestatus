@@ -17,15 +17,6 @@ type Status struct {
 	Error        string  `json: error`
 }
 
-/*func getStatus(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	site := GetSite(ps.ByName("name"))
-
-	status := status(site)
-	j, err := json.Marshal(status)
-	utils.Check(err)
-	w.Write(j)
-}*/
-
 func status(site Site) Status {
 	t := time.Now()
 	res, err := http.Get(site.Url)
@@ -50,13 +41,13 @@ func status(site Site) Status {
 	} else {
 		s.Status = res.StatusCode
 		s.Size = float64(len(body) / 1000)
-		s.ResponseTime = utils.TimeDurationInSeconds(t)
+		s.ResponseTime = utils.TimeDurationInMilliseconds(t) // cast to milliseconds
 	}
 	return s
 }
 
 func GetStatuses() []Status {
-	sites := ReadFile()
+	sites := ReadSitesFromFile()
 	statuses := make([]Status, len(sites))
 	for i := 0; i < len(sites); i++ {
 		st := status(sites[i])
