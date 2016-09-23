@@ -1,37 +1,47 @@
 [
     {
         "id": 1,
-        "name": "egreb.net",
-        "url": "http://egreb.net"
+        "name": "Dagbladet.no",
+        "url": "http://www.dagbladet.no"
     },
     {
         "id": 2,
-        "name": "dagbladet.no",
-        "url": "http://dagbladet.no"
+        "name": "Dagbladet Video",
+        "url": "http://www.dagbladet.no/video/NmdbBxyNK4E"
     },
     {
         "id": 3,
-        "name": "vakbikkja.medialaben.no",
+        "name": "Vaktbikkja",
         "url": "http://vaktbikkja.medialaben.no"
     },
     {
         "id": 4,
-        "name": "pressfire.no",
-        "url": "http://pressfire.no"
+        "name": "Agenda",
+        "url": "http://oppdateringer.medialaben.no"
     },
     {
         "id": 5,
-        "name": "vg.no",
-        "url": "http://vg.no"
+        "name": "Aibo",
+        "url": "http://aibo.dagbladet.no"
     },
     {
         "id": 6,
-        "name": "aftenposten.no",
-        "url": "http://aftenposten.no"
+        "name": "DinSide",
+        "url": "http://www.dinside.no/"
     },
     {
         "id": 7,
-        "name": "nrk.no",
-        "url": "http://nrk.no"
+        "name": "SOL",
+        "url": "http://www.sol.no/"
+    },
+    {
+        "id": 8,
+        "name": "KK",
+        "url": "http://www.kk.no/"
+    },
+    {
+        "id": 9,
+        "name": "Test-feil",
+        "url": "http://www.egreb.net/"
     }
 ]
