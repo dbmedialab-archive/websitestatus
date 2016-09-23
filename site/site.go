@@ -16,7 +16,7 @@ type Site struct {
 }
 
 func GetSite(name string) Site {
-	sites := ReadFile()
+	sites := ReadSitesFromFile()
 	var s Site
 	for i := 0; i < len(sites); i++ {
 		if sites[i].Name == name {
@@ -27,7 +27,7 @@ func GetSite(name string) Site {
 	return s
 }
 
-func ReadFile() []Site {
+func ReadSitesFromFile() []Site {
 	dat, err := ioutil.ReadFile("sites.json")
 	utils.Check(err)
 	var sites []Site
@@ -38,7 +38,7 @@ func ReadFile() []Site {
 }
 
 func GetSites(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	sites := ReadFile()
+	sites := ReadSitesFromFile()
 	j, err := json.Marshal(sites)
 	utils.Check(err)
 
