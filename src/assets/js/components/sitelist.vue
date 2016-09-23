@@ -1,10 +1,7 @@
 <template>
     <ul class="siteList">
         <li v-for="site in sites" class="site">
-            <span>{{ site.Site.Name }} </span>
-            <span>Status: {{ site.Status }} </span>
-            <span>Responsetime: {{ site.ResponseTime }} </span>
-            <span>Updated: {{ site.Updated }} </span>
+            <site v-bind:site="site"></site>
         </li>
     </ul>
 </template>
@@ -12,12 +9,20 @@
 <script>
     export default {
         ready: function () {
+            fetch("status/all", {method: "GET"}).then(function(resp) {
+                return resp.json();
+            }).then((json) => {
+                this.sites = json;
+            }).catch(function(e) {
+                console.log(arguments);
+                document.body.innerHTML = "Error getting site info<br>" + e;
+            });
+
             let client = new EventSource('http://localhost:8080/events'),
                 that = this;
 
             client.onmessage = function(msg) {
                 that.sites = JSON.parse(msg.data);
-                console.log(that.sites);
             }
         },
         data: function () {

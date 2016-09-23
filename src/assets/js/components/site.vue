@@ -1,19 +1,25 @@
 <template>
-    <span>{{ Site.Name }} </span>
-    <span>Status: {{ Status }} </span>
-    <span>Responsetime: {{ ResponseTime }} </span>
-    <span>Updated: {{ Updated }} </span>
+    <span>{{ site.Site.Name }} </span>
+    <span class="{{ getStatusClass() }}">Status: {{ site.Status }} </span>
+    <span>Responsetime: {{ getResponseTime() }} </span>
+    <span>Updated: {{ site.Updated }} </span>
 </template>
 
 <script>
     export default {
-        ready: function () {
-            console.log(this.data);
-        },
-        props: function () {
-            return [
-                'Site'
-            ]
+        props: ['site'],
+        methods: {
+            getResponseTime: function () {
+                return Math.round(this.site.ResponseTime * 100) / 100
+            },
+            getStatusClass: function () {
+                switch(this.site.Status) {
+                    case 200:
+                        return 'success'
+                    default:
+                        return 'error'
+                }
+            }
         }
     }
 </script>
