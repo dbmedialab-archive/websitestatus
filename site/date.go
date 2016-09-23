@@ -12,8 +12,10 @@ type Date struct {
 }
 
 func DateToString(time time.Time) string {
-	year := strconv.Itoa(time.Year())
 	hours := strconv.Itoa(time.Hour())
+	if time.Hour() < 10 {
+		hours = "0" + strconv.Itoa(time.Hour())
+	}
 	minutes := strconv.Itoa(time.Minute())
-	return hours + ":" + minutes + ":" + year
+	return hours + ":" + minutes
 }
