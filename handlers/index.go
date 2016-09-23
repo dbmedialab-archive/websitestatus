@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/egreb/sitesstatus/utils"
 	"github.com/egreb/websitestatus/site"
+	"github.com/egreb/websitestatus/utils"
 	"github.com/julienschmidt/httprouter"
 )
 

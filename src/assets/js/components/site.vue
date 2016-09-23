@@ -1,8 +1,9 @@
 <template>
     <span>{{ site.Site.Name }} </span>
     <span class="{{ getStatusClass() }}">Status: {{ site.Status }} </span>
-    <span>Responsetime: {{ getResponseTime() }} </span>
+    <span>Responsetime: {{ getResponseTime() }}ms </span>
     <span>Updated: {{ site.Updated }} </span>
+    <span>Size: {{ site.Size }}KB </span>
 </template>
 
 <script>
