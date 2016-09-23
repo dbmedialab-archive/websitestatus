@@ -5,6 +5,7 @@ import (
 	"text/template"
 
 	"github.com/egreb/websitestatus/broker"
+	"github.com/egreb/websitestatus/handlers"
 	"github.com/egreb/websitestatus/site"
 	"github.com/egreb/websitestatus/utils"
 	"github.com/egreb/websitestatus/worker"
@@ -17,7 +18,7 @@ func main() {
 	var router = httprouter.New()
 	broker := broker.NewServer()
 	router.NotFound = http.FileServer(http.Dir("static"))
-	router.GET("/", index)
+	router.GET("/", handlers.IndexHandler)
 	router.GET("/events", broker.ServeHTTP)
 	worker.Worker(broker)
 	http.ListenAndServe(":8080", router)

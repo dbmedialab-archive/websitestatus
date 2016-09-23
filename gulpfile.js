@@ -1,18 +1,16 @@
 var gulp = require('gulp'),
 browserify = require('browserify'),
-babelify = require('babelify'),
-sourcemaps = require('gulp-sourcemaps'),
+vueify = require('vueify'),
+source = require('vinyl-source-stream'),
 notify = require('gulp-notify'),
 buffer = require('gulp-buffer'),
-uglify = require('gulp-uglify'),
-concat = require('gulp-concat'),
-autoprefixer = require('gulp-autoprefixer'),
-source = require('vinyl-source-stream'),
 plumber = require('gulp-plumber');
+sourcemaps = require('gulp-sourcemaps'),
+uglify = require('gulp-uglify'),
 
 gulp.task('js', function() {
     browserify('./src/assets/js/app.js')
-        .transform(babelify, {presets: ["es2015", "react"]})
+        .transform(vueify)
         .bundle().on('error', notify.onError( {
             title: 'JS Error',
             message: "<%= error.message %>"
@@ -25,10 +23,15 @@ gulp.task('js', function() {
         .pipe(gulp.dest('./static/assets/js/'));
 });
 
+gulp.task('style', function () {
+
+});
+
 gulp.task('build', ['js']);
 
 gulp.task('watch', function() {
+    gulp.watch('./src/assets/js/components/*.vue', ['js']);
     gulp.watch('./src/assets/js/app.js', ['js']);
 });
 
-gulp.task('default', ['js', 'watch']);
+gulp.task('default', ['js']);

@@ -2,13 +2,10 @@ package handlers
 
 import (
 	"net/http"
-	"text/template"
 
-	"github.com/egreb/websitestatus/site"
+	"github.com/julienschmidt/httprouter"
 )
 
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	data := site.Site{}
-	t, _ := template.ParseFiles("./static/index.html")
-	t.Execute(w, data)
+func IndexHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	http.ServeFile(w, r, "./static/index.html")
 }
