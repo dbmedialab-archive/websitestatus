@@ -1,7 +1,10 @@
 body {
     padding: 0;
     margin: 0;
+    font-family: 'Lato', sans-serif;
+    color: #65818B;
 }
+
 
 #main {
     width: 100%;
@@ -16,6 +19,37 @@ body {
     height: 100vh;
 }
 
+
+.site h1 {
+    font-size: 24px;
+}
+.site p {
+    font-size: 16px;
+    margin: 8px;
+}
+.site span {
+    font-size: 18px;
+    color: #ACA695;
+}
+
+.site p .label {
+    padding: 3px 7px;
+    border-radius: 3px;
+    color: #FAFAFA;
+    letter-spacing: 1px;
+}
+
+.success {
+    background-color: #42b983;
+}
+.error {
+    background-color: #ff5252;
+}
+
+.site p {
+
+}
+
 .site {
     box-sizing: border-box;
     padding: 20px;
@@ -23,8 +57,8 @@ body {
     flex: 1;
     min-width: 33.33%;
     list-style: none;
-    background: #ccc;
-    border: 2px solid #999;
+    background: #263238;
+    border: 1.5px solid #27383E;
     text-align: center;
     display: flex;
     flex-direction: column;
