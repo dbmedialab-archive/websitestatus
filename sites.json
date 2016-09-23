@@ -33,5 +33,15 @@
         "id": 7,
         "name": "nrk.no",
         "url": "http://www.nrk.no"
+    },
+    {
+        "id": 8,
+        "name": "Agenda",
+        "url": "http://oppdateringer.medialaben.no"
+    },
+    {
+        "id": 9,
+        "name": "Aibo",
+        "url": "http://aibo.dagbladet.no"
     }
 ]
