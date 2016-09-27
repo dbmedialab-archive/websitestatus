@@ -1,0 +1,10 @@
+builds:
+  -
+    image: "golang:1.7"
+    mount: "/go/src/github.com/egreb/websitestatus"
+    steps:
+      - "go get ./..."
+      - "go build -o websitestatus"
+    results:
+      - "static"
+      - "websitestatus"
