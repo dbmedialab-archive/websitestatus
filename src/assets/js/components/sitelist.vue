@@ -18,7 +18,7 @@
                 document.body.innerHTML = "Error getting site info<br>" + e;
             });
 
-            let client = new EventSource('http://localhost:8080/events'),
+            let client = new EventSource('events'),
                 that = this;
 
             client.onmessage = function(msg) {
