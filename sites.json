@@ -41,7 +41,12 @@
     },
     {
         "id": 9,
-        "name": "egreb.net",
-        "url": "http://egreb.net/"
+        "name": "Harvester",
+        "url": "http://harvester.sol.no/get"
+    },
+    {
+        "id": 10,
+        "name": "Labrador Api",
+        "url": "http://labrador-api.dagbladet.no"
     }
 ]

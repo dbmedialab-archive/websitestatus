@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"text/template"
 
+	"os"
+
 	"github.com/egreb/websitestatus/broker"
 	"github.com/egreb/websitestatus/handlers"
 	"github.com/egreb/websitestatus/site"
@@ -15,6 +17,9 @@ import (
 // set routes
 
 func main() {
+	// Set env keys
+	os.Setenv("SLACK_URL", "https://hooks.slack.com/services/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")
+
 	var router = httprouter.New()
 	broker := broker.NewServer()
 	router.NotFound = http.FileServer(http.Dir("static"))
