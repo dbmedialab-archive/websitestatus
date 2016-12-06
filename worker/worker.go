@@ -6,8 +6,7 @@ import (
 	"time"
 
 	"github.com/egreb/websitestatus/broker"
-	"github.com/egreb/websitestatus/site"
-	"github.com/egreb/websitestatus/status"
+	"github.com/egreb/websitestatus/controllers"
 	"github.com/egreb/websitestatus/utils"
 )
 
@@ -16,10 +15,10 @@ func Worker(broker *broker.Broker) {
 	go func() {
 		for {
 			time.Sleep(time.Second * 5)
-			s := site.GetStatuses()
-			status.Check(s)
+			s := controllers.GetStatuses()
+			controllers.ControlStatus(s)
 			j, err := json.Marshal(s)
-			utils.Check(err)
+			utils.Ok(err)
 			log.Println("Receiving event")
 			broker.Notifier <- j
 		}

@@ -9,7 +9,7 @@ sourcemaps = require('gulp-sourcemaps'),
 uglify = require('gulp-uglify'),
 
 gulp.task('js', function() {
-    browserify('./src/assets/js/app.js')
+    browserify('./app/src/assets/js/app.js')
         .transform(vueify)
         .bundle().on('error', notify.onError( {
             title: 'JS Error',
@@ -20,7 +20,7 @@ gulp.task('js', function() {
         .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./static/assets/js/'));
+        .pipe(gulp.dest('./app/static/assets/js/'));
 });
 
 gulp.task('style', function () {
@@ -30,8 +30,8 @@ gulp.task('style', function () {
 gulp.task('build', ['js']);
 
 gulp.task('watch', function() {
-    gulp.watch('./src/assets/js/components/*.vue', ['js']);
-    gulp.watch('./src/assets/js/app.js', ['js']);
+    gulp.watch('./app/src/assets/js/components/*.vue', ['js']);
+    gulp.watch('./app/src/assets/js/app.js', ['js']);
 });
 
 gulp.task('default', ['js']);

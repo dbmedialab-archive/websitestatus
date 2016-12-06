@@ -2,14 +2,9 @@ package main
 
 import (
 	"net/http"
-	"text/template"
-
-	"os"
 
 	"github.com/egreb/websitestatus/broker"
 	"github.com/egreb/websitestatus/handlers"
-	"github.com/egreb/websitestatus/site"
-	"github.com/egreb/websitestatus/utils"
 	"github.com/egreb/websitestatus/worker"
 	"github.com/julienschmidt/httprouter"
 )
@@ -17,22 +12,12 @@ import (
 // set routes
 
 func main() {
-	// Set env keys
-	os.Setenv("SLACK_URL", "https://hooks.slack.com/services/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")
-
 	var router = httprouter.New()
 	broker := broker.NewServer()
-	router.NotFound = http.FileServer(http.Dir("static"))
-	router.GET("/", index)
+	router.NotFound = http.FileServer(http.Dir("app/static"))
+	router.GET("/", handlers.IndexHandler)
 	router.GET("/status/all", handlers.StatusHandler)
 	router.GET("/events", broker.ServeHTTP)
 	worker.Worker(broker)
 	http.ListenAndServe(":8080", router)
-}
-
-func index(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	data := site.Site{}
-	t, err := template.ParseFiles("./static/index.html")
-	utils.Check(err)
-	t.Execute(w, data)
 }
