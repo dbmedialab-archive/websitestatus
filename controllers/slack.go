@@ -79,6 +79,13 @@ func updateStatus(cs models.CurrentStatus, site models.Status) models.CurrentSta
 // SendMessage to slack channel
 func SendMessage(response models.SlackResponse) {
 	slackURL := os.Getenv("SLACK_URL")
+
+	// Check if the env variable is set, if not exit program
+	if slackURL == "" {
+		fmt.Println("SLACK_URL er ikke definert!!")
+		fmt.Println("Programmet avsluttes")
+		os.Exit(0)
+	}
 	j, err := json.Marshal(response)
 	if err != nil {
 		panic(err.Error)

@@ -33,7 +33,7 @@ func GetStatus(site models.Site) models.Status {
 		s.Error = "Could not connect to website"
 	} else {
 		s.Status = res.StatusCode
-		s.Size = float64(len(body) / 1000)
+		s.Size = float64(len(body) / 1000)                   // convert size to kb
 		s.ResponseTime = utils.TimeDurationInMilliseconds(t) // cast to milliseconds
 	}
 	return s
