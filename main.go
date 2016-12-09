@@ -3,9 +3,9 @@ package main
 import (
 	"net/http"
 
-	"github.com/egreb/websitestatus/broker"
-	"github.com/egreb/websitestatus/handlers"
-	"github.com/egreb/websitestatus/worker"
+	"github.com/dbmedialab/websitestatus/broker"
+	"github.com/dbmedialab/websitestatus/handlers"
+	"github.com/dbmedialab/websitestatus/worker"
 	"github.com/julienschmidt/httprouter"
 )
 

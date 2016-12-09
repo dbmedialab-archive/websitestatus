@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/egreb/websitestatus/models"
-	"github.com/egreb/websitestatus/utils"
+	"github.com/dbmedialab/websitestatus/models"
+	"github.com/dbmedialab/websitestatus/utils"
 	"github.com/julienschmidt/httprouter"
 )
 

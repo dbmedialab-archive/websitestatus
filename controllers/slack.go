@@ -8,7 +8,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/egreb/websitestatus/models"
+	"github.com/dbmedialab/websitestatus/models"
 )
 
 var state = make(map[string]models.CurrentStatus)

@@ -5,9 +5,9 @@ import (
 	"log"
 	"time"
 
-	"github.com/egreb/websitestatus/broker"
-	"github.com/egreb/websitestatus/controllers"
-	"github.com/egreb/websitestatus/utils"
+	"github.com/dbmedialab/websitestatus/broker"
+	"github.com/dbmedialab/websitestatus/controllers"
+	"github.com/dbmedialab/websitestatus/utils"
 )
 
 // Worker checks websites every 5 seconds and returns the json feed

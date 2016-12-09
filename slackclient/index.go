@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/egreb/websitestatus/status"
+	"github.com/dbmedialab/websitestatus/models"
 
 	"encoding/json"
 )
 
 // SendMessage to slack channel
-func SendMessage(response status.SlackResponse) {
+func SendMessage(response models.SlackResponse) {
 	const url string = "https://hooks.slack.com/services/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"
 	j, err := json.Marshal(response)
 	if err != nil {

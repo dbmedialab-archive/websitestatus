@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"text/template"
 
-	"github.com/egreb/websitestatus/controllers"
-	"github.com/egreb/websitestatus/models"
-	"github.com/egreb/websitestatus/utils"
+	"github.com/dbmedialab/websitestatus/controllers"
+	"github.com/dbmedialab/websitestatus/models"
+	"github.com/dbmedialab/websitestatus/utils"
 	"github.com/julienschmidt/httprouter"
 )
 
