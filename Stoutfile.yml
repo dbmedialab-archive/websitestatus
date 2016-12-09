@@ -8,3 +8,4 @@ builds:
     results:
       - "app"
       - "websitestatus"
+      - "sites.json"
