@@ -47,6 +47,6 @@
     {
         "id": 10,
         "name": "Labrador Api",
-        "url": "http://labrador-api.dagbladet.no"
+        "url": "http://labrador-api.dagbladet.no/?query=id:$id"
     }
 ]
