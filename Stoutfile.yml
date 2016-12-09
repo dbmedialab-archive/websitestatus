@@ -1,7 +1,7 @@
 builds:
   -
     image: "golang:1.7"
-    mount: "/go/src/github.com/egreb/websitestatus"
+    mount: "/go/src/github.com/dbmedialab/websitestatus"
     steps:
       - "go get ./..."
       - "go build -o websitestatus"
