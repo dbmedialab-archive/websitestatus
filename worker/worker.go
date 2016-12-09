@@ -6,17 +6,19 @@ import (
 	"time"
 
 	"github.com/egreb/websitestatus/broker"
-	"github.com/egreb/websitestatus/site"
+	"github.com/egreb/websitestatus/controllers"
 	"github.com/egreb/websitestatus/utils"
 )
 
+// Worker checks websites every 5 seconds and returns the json feed
 func Worker(broker *broker.Broker) {
 	go func() {
 		for {
 			time.Sleep(time.Second * 5)
-			status := site.GetStatuses()
-			j, err := json.Marshal(status)
-			utils.Check(err)
+			s := controllers.GetStatuses()
+			controllers.ControlStatus(s)
+			j, err := json.Marshal(s)
+			utils.Ok(err)
 			log.Println("Receiving event")
 			broker.Notifier <- j
 		}

@@ -14,7 +14,6 @@
             }).then((json) => {
                 this.sites = json;
             }).catch(function(e) {
-                console.log(arguments);
                 document.body.innerHTML = "Error getting site info<br>" + e;
             });
 

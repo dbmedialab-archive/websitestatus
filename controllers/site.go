@@ -1,23 +1,19 @@
-package site
+package controllers
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 
+	"github.com/egreb/websitestatus/models"
 	"github.com/egreb/websitestatus/utils"
 	"github.com/julienschmidt/httprouter"
 )
 
-type Site struct {
-	Id   int    `json: id`
-	Name string `json: name`
-	Url  string `json: url`
-}
-
-func GetSite(name string) Site {
+// GetSite returns site according to string
+func GetSite(name string) models.Site {
 	sites := ReadSitesFromFile()
-	var s Site
+	var s models.Site
 	for i := 0; i < len(sites); i++ {
 		if sites[i].Name == name {
 			s := sites[i]
@@ -27,20 +23,22 @@ func GetSite(name string) Site {
 	return s
 }
 
-func ReadSitesFromFile() []Site {
+// ReadSitesFromFile returns all entered sites in the json file
+func ReadSitesFromFile() []models.Site {
 	dat, err := ioutil.ReadFile("sites.json")
-	utils.Check(err)
-	var sites []Site
+	utils.Ok(err)
+	var sites []models.Site
 	err = json.Unmarshal(dat, &sites)
-	utils.Check(err)
+	utils.Ok(err)
 
 	return sites
 }
 
+// GetSites returns all sites from json file
 func GetSites(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	sites := ReadSitesFromFile()
 	j, err := json.Marshal(sites)
-	utils.Check(err)
+	utils.Ok(err)
 
 	w.Write(j)
 }
