@@ -14,13 +14,16 @@ import (
 var state = make(map[string]models.CurrentStatus)
 var mutex = &sync.Mutex{}
 
+const statusOK = 200
+const maxResponseTime = 3000
+const countTreshold = 10
+
 // ControlStatus checks the status for every site, if status is bad send notification to slack channel
 func ControlStatus(sites []models.Status) {
 	for _, site := range sites {
 		mutex.Lock()
 		oldStatus := state[site.Site.URL]
 		currentStatus := updateStatus(oldStatus, site)
-
 		state[site.Site.URL] = currentStatus
 		mutex.Unlock()
 
@@ -28,73 +31,80 @@ func ControlStatus(sites []models.Status) {
 	}
 }
 
-func buildSlackMessage(oldStatus models.CurrentStatus, currentStatus models.CurrentStatus, site models.Status) {
+func buildSlackMessage(old models.CurrentStatus, curr models.CurrentStatus, site models.Status) {
 	attachments := models.Attachments{}
-	sendSlack := false
-	if (oldStatus.Status != currentStatus.Status || oldStatus.Response.Err != currentStatus.Response.Err) && currentStatus.Status && !currentStatus.Response.Err {
-		attachments.Text = fmt.Sprintf("<%s|%s> kjører igjen som normalt\n", site.Site.URL, site.Site.Name)
-		attachments.Color = "#36a64f"
-		sendSlack = true
-	} else {
-		if currentStatus.Response.Err && currentStatus.Response.Count%10 == 0 {
-			fmt.Println("Check")
+	send := false
 
-			if currentStatus.Response.Count > 10 {
-				attachments.Text = fmt.Sprintf("<!channel> <%s|%s> opplever fortsatt veldig lang lastetid, vennligst kontroller at nettisden fungerer som den skal", site.Site.URL, site.Site.Name)
-			} else {
-				attachments.Text = fmt.Sprintf("<!channel> <%s|%s> opplever veldig lang lastetid, vennligst kontroller at nettisden fungerer som den skal", site.Site.URL, site.Site.Name)
-			}
+	if old.Error != curr.Error {
+		if !curr.Error {
+			attachments.Text = fmt.Sprintf("<%s|%s> kjører igjen som normalt", site.Site.URL, site.Site.Name)
+			attachments.Color = "#36a64f"
+			send = true
+		} else {
+			attachments.Text = fmt.Sprintf("<!channel> <%s|%s> ser ut til å være nede, får ikke respons 200. Vennligst kontroller", site.Site.URL, site.Site.Name)
 			attachments.Color = "#c00"
-			sendSlack = true
 		}
 	}
-	if sendSlack {
-		sr := models.SlackResponse{[]models.Attachments{attachments}}
-		SendMessage(sr)
+
+	if !send {
+		if old.Response.Error != curr.Response.Error {
+			if !curr.Response.Error {
+				attachments.Text = fmt.Sprintf("<%s|%s> kjører igjen som normalt etter å ha opplevd en periode med lang lastetid", site.Site.URL, site.Site.Name)
+				attachments.Color = "#36a64f"
+			} else {
+				attachments.Text = fmt.Sprintf("<!channel> <%s|%s> opplever veldig lang lastetid, vennligst kontroller at nettsiden fungerer som den skal", site.Site.URL, site.Site.Name)
+				attachments.Color = "#c00"
+			}
+			send = true
+		}
+	}
+
+	if send {
+		// Build slackmessage
+		message := models.SlackMessage{[]models.Attachments{attachments}}
+		// Send message to slack channel
+		Broadcast(message)
 	}
 }
 
-func updateStatus(cs models.CurrentStatus, site models.Status) models.CurrentStatus {
-	cs.Status = true
-	if site.Status != 200 {
-		cs.Status = false
+func updateStatus(current models.CurrentStatus, site models.Status) models.CurrentStatus {
+	current.Error = false
+	if site.Status != statusOK {
+		current.Error = true
 	}
 
-	// If responsetime is higher then 5 seconds
-	if int(site.ResponseTime) >= 5000 {
-		cs.Response.Count++
+	// If responsetime is higher then 5 seconds increase count
+	// Else reset counter
+	if int(site.ResponseTime) >= maxResponseTime {
+		current.Response.Count++
 	} else {
-		cs.Response.Count = 0
+		current.Response.Count = 0
 	}
 
-	if cs.Response.Count >= 10 {
-		cs.Response.Err = true
-	} else {
-		cs.Response.Err = false
+	current.Response.Error = false
+	if current.Response.Count >= countTreshold {
+		current.Response.Error = true
 	}
-
-	return cs
+	return current
 }
 
-// SendMessage to slack channel
-func SendMessage(response models.SlackResponse) {
+// Broadcast to slack channel
+func Broadcast(message models.SlackMessage) {
 	slackURL := os.Getenv("SLACK_URL")
 
-	// Check if the env variable is set, if not exit program
-	if slackURL == "" {
-		fmt.Println("SLACK_URL er ikke definert!!")
-		fmt.Println("Programmet avsluttes")
-		os.Exit(0)
+	// Check if the SLACK_URL env variable is set, if not messages are not being sent to slack
+	if slackURL != "" {
+		// parse to json
+		j, err := json.Marshal(message)
+		if err != nil {
+			panic(err.Error)
+		}
+		req, err := http.NewRequest("POST", slackURL, bytes.NewBuffer(j))
+		req.Header.Set("Content-Type", "application/json")
+		resp, err := http.DefaultClient.Do(req)
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		defer resp.Body.Close()
 	}
-	j, err := json.Marshal(response)
-	if err != nil {
-		panic(err.Error)
-	}
-	req, err := http.NewRequest("POST", slackURL, bytes.NewBuffer(j))
-	req.Header.Set("Content-Type", "application/json")
-	resp, err := http.DefaultClient.Do(req)
-	if err != nil {
-		panic(err.Error)
-	}
-	defer resp.Body.Close()
 }

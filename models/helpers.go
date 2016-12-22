@@ -1,19 +1,19 @@
 package models
 
-// SlackResponse are being sent to the slack channel
-type SlackResponse struct {
+// SlackMessage are being sent to the slack channel
+type SlackMessage struct {
 	Attachments []Attachments `json:"attachments"`
 }
 
 // CurrentStatus structure
 type CurrentStatus struct {
-	Status   bool         `json:"status"`
+	Error    bool         `json:"status"`
 	Response ResponseTime `json:"responsetime"`
 }
 
 // ResponseTime structure
 type ResponseTime struct {
-	Err   bool `json:"error"`
+	Error bool `json:"error"`
 	Count int  `json:"count"`
 }
 

@@ -9,8 +9,6 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// set routes
-
 func main() {
 	var router = httprouter.New()
 	broker := broker.NewServer()

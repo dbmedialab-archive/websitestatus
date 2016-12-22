@@ -14,8 +14,8 @@ func GetStatus(site models.Site) models.Status {
 	t := time.Now()
 	res, err := http.Get(site.URL)
 
-	defer res.Body.Close()
 	body, _ := ioutil.ReadAll(res.Body)
+	defer res.Body.Close()
 
 	s := models.Status{
 		Site: models.Site{
@@ -30,7 +30,7 @@ func GetStatus(site models.Site) models.Status {
 		Error:        "",
 	}
 	if err != nil {
-		s.Error = "Could not connect to website"
+		s.Error = "Could not connect to the website"
 	} else {
 		s.Status = res.StatusCode
 		s.Size = float64(len(body) / 1000)                   // convert size to kb
